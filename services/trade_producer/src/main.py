@@ -4,6 +4,8 @@ from time import sleep
 
 #from src.config import config
 from src.kraken_api import KrakenWebsocketTradeAPI
+from websocket._exceptions import WebSocketConnectionClosedException
+
 
 
 def produce_trades(
@@ -49,8 +51,13 @@ def produce_trades(
 
 
 if __name__ == '__main__':
-    produce_trades(
-        kafka_broker_address='redpanda-0:9092',
-        kafka_topic='trade',
-        product_ids=['BTC-USD']
-    )
+    try:
+        produce_trades(
+            kafka_broker_address='redpanda-0:9092',
+            kafka_topic='trade',
+            product_ids=['BTC/USD']
+        )
+    except WebSocketConnectionClosedException:
+        print("Connection lost. Retrying...")
+
+    
