@@ -5,12 +5,12 @@ from websocket import create_connection
 class KrakenWebsocketTradeAPI:
 
     URL = 'wss://ws.kraken.com/v2'
-    def __init__(self, product_id: List[str]):
-        self.product_id = product_id
+    def __init__(self, product_ids: List[str]):
+        self.product_ids = product_ids
         self._ws = create_connection(self.URL)
-        self._subscribe(product_id)
+        self._subscribe(product_ids)
 
-    def _subscribe(self, product_id: List[str]):
+    def _subscribe(self, product_ids: List[str]):
         '''
         Establishes a connection to the Kraken websocket API and subscribes to the trade channel for the given product_id.'''
         msg = {
@@ -18,7 +18,7 @@ class KrakenWebsocketTradeAPI:
             "params": {
                 "channel": "trade",
                 "symbol": [
-                    product_id
+                    product_ids
                 ],
                 "snapshot": False }
         }
@@ -26,7 +26,7 @@ class KrakenWebsocketTradeAPI:
 
         # for each product_id, we dump the first two messages because they are not trade data, 
         # but rather connection status messages
-        for pro in product_id:
+        for pro in product_ids:
             _=self._ws.recv()
             _=self._ws.recv()
         

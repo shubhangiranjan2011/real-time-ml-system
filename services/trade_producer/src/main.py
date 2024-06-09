@@ -51,5 +51,6 @@ def produce_trades(
 if __name__ == '__main__':
     produce_trades(
         kafka_broker_address='redpanda-0:9092',
-        kafka_topic='trade'
+        kafka_topic='trade',
+        product_ids=['BTC-USD']
     )
