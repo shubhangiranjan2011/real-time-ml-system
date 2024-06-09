@@ -8,8 +8,6 @@ class KrakenWebsocketTradeAPI:
     def __init__(self, product_id: List[str]):
         self.product_id = product_id
         self._ws = create_connection(self.URL)
-        print("Connection established")
-        print(f "Subscribing to {product_id} trades")
         self._subscribe(product_id)
 
     def _subscribe(self, product_id: List[str]):
