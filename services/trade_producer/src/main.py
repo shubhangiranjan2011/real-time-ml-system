@@ -3,7 +3,7 @@ from quixstreams import Application
 from time import sleep
 
 #from src.config import config
-from src.kraken_api import KrakenWebsocketTradeAPI
+from kraken_api import KrakenWebsocketTradeAPI
 from websocket._exceptions import WebSocketConnectionClosedException
 
 
