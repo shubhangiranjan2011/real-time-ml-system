@@ -1,5 +1,6 @@
 from typing import List, Dict
 import json
+from loguru import logger
 from websocket import create_connection
 
 class KrakenWebsocketTradeAPI:
@@ -7,12 +8,17 @@ class KrakenWebsocketTradeAPI:
     URL = 'wss://ws.kraken.com/v2'
     def __init__(self, product_ids: List[str]):
         self.product_ids = product_ids
+
         self._ws = create_connection(self.URL)
+        logger.info("Connection established to Kraken API.")
+
         self._subscribe(product_ids)
+
 
     def _subscribe(self, product_ids: List[str]):
         '''
         Establishes a connection to the Kraken websocket API and subscribes to the trade channel for the given product_id.'''
+        logger.info("Subscribing to the Kraken API...")
         msg = {
             "method": "subscribe",
             "params": {
@@ -23,6 +29,7 @@ class KrakenWebsocketTradeAPI:
                 "snapshot": False }
         }
         self._ws.send(json.dumps(msg))
+        logger.info("Subscribed to the Kraken API.")
 
         # for each product_id, we dump the first two messages because they are not trade data, 
         # but rather connection status messages

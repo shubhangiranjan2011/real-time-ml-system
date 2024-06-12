@@ -1,6 +1,7 @@
 from typing import Dict, List
 from quixstreams import Application
 from time import sleep
+from loguru import logger
 
 #from src.config import config
 from kraken_api import KrakenWebsocketTradeAPI
@@ -29,6 +30,7 @@ def produce_trades(
     topic = app.topic(name=kafka_topic, value_serializer='json')
 
     kraken_api = KrakenWebsocketTradeAPI(product_ids=product_ids)
+    logger.info("Creating the producer...")
 
     # Create a Producer instance
     with app.get_producer() as producer:
@@ -38,6 +40,7 @@ def produce_trades(
 
             for trade in trades:
                 trades: List[Dict] = kraken_api.get_trades()
+                logger.info("Got trades from Kraken API")
                 
 
                 # Serialize an event using the defined Topic 
@@ -47,6 +50,7 @@ def produce_trades(
                 producer.produce(
                     topic=topic.name, value=message.value, key=message.key
                 )
+                logger.info("Message sent")
 
             sleep(1) 
 
