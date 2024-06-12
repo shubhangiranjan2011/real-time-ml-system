@@ -3,6 +3,7 @@ FROM python:3.12.3-slim
 #stream output to console
 ENV PYTHONUNBUFFERED=1
 
+#install poetry
 RUN pip install poetry==1.8.3
 
 WORKDIR /app
