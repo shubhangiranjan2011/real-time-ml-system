@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List
 from quixstreams import Application
 from time import sleep
 
@@ -37,6 +37,7 @@ def produce_trades(
             trades = kraken_api.get_trades()
 
             for trade in trades:
+                trades: List[Dict] = kraken_api.get_trades()
                 
 
                 # Serialize an event using the defined Topic 
