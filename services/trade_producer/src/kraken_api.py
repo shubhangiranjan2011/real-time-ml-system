@@ -23,9 +23,8 @@ class KrakenWebsocketTradeAPI:
             "method": "subscribe",
             "params": {
                 "channel": "trade",
-                "symbol": [
-                    product_ids
-                ],
+                "symbol": 
+                    product_ids,
                 "snapshot": False }
         }
         self._ws.send(json.dumps(msg))
